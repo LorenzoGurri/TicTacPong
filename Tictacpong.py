@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+
+"""
+Written and tested with python 3.7.0
+"""
 import tkinter as tk
 from tkinter import font
 import Pong
