@@ -2,10 +2,12 @@
 
 """
 Written and tested with python 3.7.0
+By: Lorenzo Gurri
 """
 import tkinter as tk
 from tkinter import font
 import Pong
+
 class Tictacpong:
     def __init__(self):
         self.root = tk.Tk()
@@ -19,19 +21,80 @@ class Tictacpong:
         self.player = True
         self.challenge = tk.Button(self.root, state="disabled", bg="RED", text="Challenge!", width = 12, height=1, font=self.HELV32, command=self.__challengeOnPress)
         self.currentMove = None
-        self.pong = Pong.Pong()
+
     def __challengeOnPress(self):
-        if(self.player):
-            self.pong.play(1)
+        bg = self.challenge.cget("bg")
+        if bg == "blue":
+            pong = Pong.Pong()
+            pongWin = pong.play(2)
+            #  Player 2 challenges and wins
+            if pongWin == 1:
+                print("Player 2 won pong")
+                self.buttons[self.currentMove].configure(state = "disabled", image = self.OIMG)
+                self.buttonsPictures[self.currentMove] = "O"
+                self.player = False
+                gameWin = self.__checkWin("O")
+                if gameWin == 1:
+                    print("Player 2 wins the game!")
+                    exit(0)
+                elif gameWin == 0:
+                    print("TIE!")
+                    exit(0)
+            #  Player 2 challenges and looses
+            if pongWin == 2:
+                print("player 1 won pong")
+                self.player = True
+        elif bg == "red":
+            pong = Pong.Pong()
+            pongWin = pong.play(1)
+            #  Player 1 challenges and wins
+            if pongWin == 1:
+                print("Player 1 won pong")
+                self.buttons[self.currentMove].configure(state = "disabled", image = self.XIMG)
+                self.buttonsPictures[self.currentMove] = "X"
+                self.player = False
+                gameWin = self.__checkWin("X")
+                if gameWin == 1:
+                    print("Player 1 wins the game!")
+                    exit(0)
+                elif gameWin == 0:
+                    print("TIE!")
+                    exit(0)
+
+
+    def __checkWin(self, s):
+        """ Layout for reference:
+        0 1 2
+        3 4 5
+        6 7 8
+        """
+        if((self.buttonsPictures[0] == s and self.buttonsPictures[1] == s and self.buttonsPictures[2] == s) or
+           (self.buttonsPictures[3] == s and self.buttonsPictures[4] == s and self.buttonsPictures[5] == s) or
+           (self.buttonsPictures[6] == s and self.buttonsPictures[7] == s and self.buttonsPictures[8] == s) or
+           (self.buttonsPictures[0] == s and self.buttonsPictures[3] == s and self.buttonsPictures[6] == s) or
+           (self.buttonsPictures[1] == s and self.buttonsPictures[4] == s and self.buttonsPictures[7] == s) or
+           (self.buttonsPictures[2] == s and self.buttonsPictures[5] == s and self.buttonsPictures[8] == s) or
+           (self.buttonsPictures[0] == s and self.buttonsPictures[4] == s and self.buttonsPictures[8] == s) or
+           (self.buttonsPictures[2] == s and self.buttonsPictures[4] == s and self.buttonsPictures[6] == s)):
+            return 1
+        elif(self.buttonsPictures[0] != "B" and
+                self.buttonsPictures[1] != "B" and
+                self.buttonsPictures[2] != "B" and
+                self.buttonsPictures[3] != "B" and
+                self.buttonsPictures[4] != "B" and
+                self.buttonsPictures[5] != "B" and
+                self.buttonsPictures[6] != "B" and
+                self.buttonsPictures[7] != "B" and
+                self.buttonsPictures[8] != "B"):
+            return 0
         else:
-            self.pong.play(2)
+            return -1
 
     # Responsible for:
     #   changing button image
     #   checking for a winner or tie and acting accordingly
-    #   TODO: starting congradulations graphic
+    #   TODO: create a congradulations player X graphic instead of printing it out to console
     def __tttOnPress(self, index):
-
         # Player 1's turn
         if(self.player):
             self.currentMove = index
@@ -40,33 +103,15 @@ class Tictacpong:
             self.buttons[index].configure(state = "disabled", image = self.XIMG)
             self.buttonsPictures[index] = "X"
             # Check for win or tie
-            """ Layout for reference:
-            0 1 2
-            3 4 5
-            6 7 8
-            """
-            if((self.buttonsPictures[0] == "X" and self.buttonsPictures[1] == "X" and self.buttonsPictures[2] == "X") or
-               (self.buttonsPictures[3] == "X" and self.buttonsPictures[4] == "X" and self.buttonsPictures[5] == "X") or
-               (self.buttonsPictures[6] == "X" and self.buttonsPictures[7] == "X" and self.buttonsPictures[8] == "X") or
-               (self.buttonsPictures[0] == "X" and self.buttonsPictures[3] == "X" and self.buttonsPictures[6] == "X") or
-               (self.buttonsPictures[1] == "X" and self.buttonsPictures[4] == "X" and self.buttonsPictures[7] == "X") or
-               (self.buttonsPictures[2] == "X" and self.buttonsPictures[5] == "X" and self.buttonsPictures[8] == "X") or
-               (self.buttonsPictures[0] == "X" and self.buttonsPictures[4] == "X" and self.buttonsPictures[8] == "X") or
-               (self.buttonsPictures[2] == "X" and self.buttonsPictures[4] == "X" and self.buttonsPictures[6] == "X")):
-               # TODO: Make a propper winning animation / graphic
-               print("Player 1 Wins!!")
-               exit(0)
-            elif(self.buttonsPictures[0] != "B" and
-                    self.buttonsPictures[1] != "B" and
-                    self.buttonsPictures[2] != "B" and
-                    self.buttonsPictures[3] != "B" and
-                    self.buttonsPictures[4] != "B" and
-                    self.buttonsPictures[5] != "B" and
-                    self.buttonsPictures[6] != "B" and
-                    self.buttonsPictures[7] != "B" and
-                    self.buttonsPictures[8] != "B"):
-                print("Tie!!")
+            win = self.__checkWin("X")
+            if win == 1:
+                print("Player 1 wins")
                 exit(0)
+            elif win == 0:
+                print("TIE!")
+                exit(0)
+            else:
+                pass
             self.player = False
         # Player 2's turn
         else:
@@ -75,29 +120,16 @@ class Tictacpong:
 
             self.buttons[index].configure(state = "disabled", image = self.OIMG)
             self.buttonsPictures[index] = "O"
-            if((self.buttonsPictures[0] == "O" and self.buttonsPictures[1] == "O" and self.buttonsPictures[2] == "O") or
-               (self.buttonsPictures[3] == "O" and self.buttonsPictures[4] == "O" and self.buttonsPictures[5] == "O") or
-               (self.buttonsPictures[6] == "O" and self.buttonsPictures[7] == "O" and self.buttonsPictures[8] == "O") or
-               (self.buttonsPictures[0] == "O" and self.buttonsPictures[3] == "O" and self.buttonsPictures[6] == "O") or
-               (self.buttonsPictures[1] == "O" and self.buttonsPictures[4] == "O" and self.buttonsPictures[7] == "O") or
-               (self.buttonsPictures[2] == "O" and self.buttonsPictures[5] == "O" and self.buttonsPictures[8] == "O") or
-               (self.buttonsPictures[0] == "O" and self.buttonsPictures[4] == "O" and self.buttonsPictures[8] == "O") or
-               (self.buttonsPictures[2] == "O" and self.buttonsPictures[4] == "O" and self.buttonsPictures[6] == "O")):
-               # TODO: Make a propper winning animation / graphic
-               print("Player 2 Wins!!")
-               exit(0)
-            elif(self.buttonsPictures[0] != "B" and
-                 self.buttonsPictures[1] != "B" and
-                 self.buttonsPictures[2] != "B" and
-                 self.buttonsPictures[3] != "B" and
-                 self.buttonsPictures[4] != "B" and
-                 self.buttonsPictures[5] != "B" and
-                 self.buttonsPictures[6] != "B" and
-                 self.buttonsPictures[7] != "B" and
-                 self.buttonsPictures[8] != "B"):
-                 print("Tie!!")
-                 exit(0)
-            self.player = True
+            win = self.__checkWin("O")
+            if win == 1:
+                print("Player 2 wins")
+                exit(0)
+            elif win == 0:
+                print("TIE!")
+                exit(0)
+            else:
+                pass
+                self.player = True
 
     def main(self):
         self.root.resizable(width=False, height=False)
@@ -133,9 +165,8 @@ class Tictacpong:
         self.buttons[6].grid(row = 4, column = 0)
         self.buttons[7].grid(row = 4, column = 1)
         self.buttons[8].grid(row = 4, column = 2)
-
         self.root.mainloop()
 
 if __name__=='__main__':
-    graph = Tictacpong()
-    graph.main()
+    ttt = Tictacpong()
+    ttt.main()
