@@ -13,7 +13,7 @@ TicTacToe but players can challenge other players moves with a game of pong
 ![Pong preview](img/pong.png "Pong")
 
 ## TODO:
-- [ ] Renamge TicTacToe window to TicTacPong
+- [x] Renamge TicTacToe window to TicTacPong
 - [ ] Make it so players can only challenge a move once (challenge button disabled)
 - [ ] Make it so a challenging player looses his turn if he looses the challenge
 - [ ] Add a count down before the pong game starts

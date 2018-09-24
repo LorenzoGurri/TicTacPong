@@ -132,6 +132,7 @@ class Tictacpong:
                 self.player = True
 
     def main(self):
+        self.root.wm_title("TicTacPong")
         self.root.resizable(width=False, height=False)
         self.root.configure(background = "#ffffd7")
         self.centerFrame.grid(padx=10, pady=5)
