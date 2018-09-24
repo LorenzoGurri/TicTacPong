@@ -23,6 +23,7 @@ class Tictacpong:
         self.currentMove = None
 
     def __challengeOnPress(self):
+        self.challenge.configure(state = "disabled")
         bg = self.challenge.cget("bg")
         if bg == "blue":
             pong = Pong.Pong()
@@ -52,7 +53,7 @@ class Tictacpong:
                 print("Player 1 won pong")
                 self.buttons[self.currentMove].configure(state = "disabled", image = self.XIMG)
                 self.buttonsPictures[self.currentMove] = "X"
-                self.player = False
+                self.player = True
                 gameWin = self.__checkWin("X")
                 if gameWin == 1:
                     print("Player 1 wins the game!")
@@ -60,7 +61,9 @@ class Tictacpong:
                 elif gameWin == 0:
                     print("TIE!")
                     exit(0)
-
+            if pongWin == 2:
+                print("player 2 won pong")
+                self.player = False
 
     def __checkWin(self, s):
         """ Layout for reference:
