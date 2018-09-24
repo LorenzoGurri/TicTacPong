@@ -6,6 +6,7 @@ https://www.youtube.com/watch?v=LH8WgrUWG_I
 """
 import turtle
 import random
+import time
 
 class Pong:
 
@@ -15,6 +16,13 @@ class Pong:
         self.finished = False
         self.winner = 0
 
+    def _countDown(self, pen):
+        pen.goto(0,0)
+        for i in [3, 2, 1]:
+            pen.clear()
+            pen.write("{}".format(i), align="center", font=("Courier", 50, "normal"))
+            time.sleep(1)
+        pen.clear()
     def _paddleBallCollision(self, paddle1, paddle2, ball):
         if (ball.xcor() > 380 and ball.xcor() < 390) and (ball.ycor() < paddle2.ycor() + 50 and ball.ycor() > paddle2.ycor() -50):
             ball.setx(380)
@@ -106,6 +114,7 @@ class Pong:
         pen.color("white")
         pen.penup()
         pen.hideturtle()
+        self._countDown(pen)
         pen.goto(0,260)
         pen.write("Challenger: {}  Defending: {}".format(self.p1Score, self.p2Score), align="center", font=("Courier", 16, "normal"))
 
