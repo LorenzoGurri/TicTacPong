@@ -127,5 +127,25 @@ class Pong:
             self._ballMove(ball, pen)
             self._paddleBallCollision(p1, p2, ball)
             win.update()
+        ball.hideturtle()
+        p1.hideturtle()
+        p2.hideturtle()
+        pen.goto(0,0)
+        if challenger == 1:
+            if self.winner == 1:
+                pen.color("red")
+                pen.write("The Challenger Wins!!", align="center", font=("Courier", 24, "normal"))
+            elif self.winner == 2:
+                pen.color("blue")
+                pen.write("The Defender Wins!!", align="center", font=("Courier", 24, "normal"))
+        elif challenger == 2:
+            if self.winner == 2:
+                pen.color("blue")
+                pen.write("The Challenger Wins!!", align="center", font=("Courier", 24, "normal"))
+            elif self.winner == 1:
+                pen.color("red")
+                pen.write("The Defender Wins!!", align="center", font=("Courier", 24, "normal"))
+        win.update()
+        time.sleep(3)
         win.bye()
         return self.winner

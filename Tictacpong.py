@@ -30,39 +30,45 @@ class Tictacpong:
             pongWin = pong.play(2)
             #  Player 2 challenges and wins
             if pongWin == 1:
-                print("Player 2 won pong")
                 self.buttons[self.currentMove].configure(state = "disabled", image = self.OIMG)
                 self.buttonsPictures[self.currentMove] = "O"
                 self.player = False
                 gameWin = self.__checkWin("O")
                 if gameWin == 1:
-                    print("Player 2 wins the game!")
-                    exit(0)
+                    finWin = tk.Toplevel()
+                    finWin.grab_set()
+                    finWin.grab_set()
+                    finWin.protocol('WM_DELETE_WINDOW', quit)
+                    lbl = tk.Label(finWin, text="Player 2 Wins!!", font=("Courier", 44)).grid(row=10, column=10)
                 elif gameWin == 0:
-                    print("TIE!")
-                    exit(0)
+                    finWin = tk.Toplevel()
+                    finWin.grab_set()
+                    finWin.grab_set()
+                    finWin.protocol('WM_DELETE_WINDOW', quit)
+                    lbl = tk.Label(finWin, text="Tie!!",font=("Courier", 44)).grid(row=10, column=10)
             #  Player 2 challenges and looses
             if pongWin == 2:
-                print("player 1 won pong")
                 self.player = True
         elif bg == "red":
             pong = Pong.Pong()
             pongWin = pong.play(1)
             #  Player 1 challenges and wins
             if pongWin == 1:
-                print("Player 1 won pong")
                 self.buttons[self.currentMove].configure(state = "disabled", image = self.XIMG)
                 self.buttonsPictures[self.currentMove] = "X"
                 self.player = True
                 gameWin = self.__checkWin("X")
                 if gameWin == 1:
-                    print("Player 1 wins the game!")
-                    exit(0)
+                    finWin = tk.Toplevel()
+                    finWin.grab_set()
+                    finWin.protocol('WM_DELETE_WINDOW', quit)
+                    lbl = tk.Label(finWin, text="Player 1 Wins!!", font=("Courier", 44)).grid(row=10, column=10)
                 elif gameWin == 0:
-                    print("TIE!")
-                    exit(0)
+                    finWin = tk.Toplevel()
+                    finWin.grab_set()
+                    finWin.protocol('WM_DELETE_WINDOW', quit)
+                    lbl = tk.Label(finWin, text="Tie!!", font=("Courier", 44)).grid(row=10, column=10)
             if pongWin == 2:
-                print("player 2 won pong")
                 self.player = False
 
     def __checkWin(self, s):
@@ -108,11 +114,15 @@ class Tictacpong:
             # Check for win or tie
             win = self.__checkWin("X")
             if win == 1:
-                print("Player 1 wins")
-                exit(0)
+                finWin = tk.Toplevel()
+                finWin.grab_set()
+                finWin.protocol('WM_DELETE_WINDOW', quit)
+                lbl = tk.Label(finWin, text="Player 1 Wins!!", font=("Courier", 44)).grid(row=10, column=10)
             elif win == 0:
-                print("TIE!")
-                exit(0)
+                finWin = tk.Toplevel()
+                finWin.grab_set()
+                finWin.protocol('WM_DELETE_WINDOW', quit)
+                lbl = tk.Label(finWin, text="Tie!!", font=("Courier", 44)).grid(row=10, column=10)
             else:
                 pass
             self.player = False
@@ -125,11 +135,15 @@ class Tictacpong:
             self.buttonsPictures[index] = "O"
             win = self.__checkWin("O")
             if win == 1:
-                print("Player 2 wins")
-                exit(0)
+                finWin = tk.Toplevel()
+                finWin.grab_set()
+                finWin.protocol('WM_DELETE_WINDOW', quit)
+                lbl = tk.Label(finWin, text="Player 2 Wins!!", font=("Courier", 44)).grid(row=10, column=10)
             elif win == 0:
-                print("TIE!")
-                exit(0)
+                finWin = tk.Toplevel()
+                finWin.grab_set()
+                finWin.protocol('WM_DELETE_WINDOW', quit)
+                lbl = tk.Label(finWin, text="Tie!!",font=("Courier", 44)).grid(row=10, column=10)
             else:
                 pass
                 self.player = True
